@@ -1,9 +1,9 @@
 #pragma once
-#include "stdafx.h"
-#include "Game.h"
-#include "DirectGraphics.h"
-#include "DirectInput.h"
-#include "Mesh.h"
+#include "stdafx.hpp"
+#include "Game.hpp"
+#include "DirectGraphics.hpp"
+#include "DirectInput.hpp"
+#include "Mesh.hpp"
 
 Mesh *a;
 

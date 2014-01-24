@@ -1,6 +1,6 @@
 #pragma once
-#include "stdafx.h"
-#include "DirectGraphics.h"
+#include "stdafx.hpp"
+#include "DirectGraphics.hpp"
 
 class Game
 {

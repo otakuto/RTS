@@ -21,23 +21,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>stdafx</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectGraphics.h">
+    <ClInclude Include="DirectGraphics.hpp">
       <Filter>DirectGraphics</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="DirectInput.hpp">
+      <Filter>DirectInput</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.hpp">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="DirectInput.h">
-      <Filter>DirectInput</Filter>
+    <ClInclude Include="stdafx.hpp">
+      <Filter>stdafx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

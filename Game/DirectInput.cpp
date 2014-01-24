@@ -1,6 +1,6 @@
 #pragma once
-#include "stdafx.h"
-#include "DirectInput.h"
+#include "stdafx.hpp"
+#include "DirectInput.hpp"
 
 const int DirectInput::KEY_LENGTH = 256;
 

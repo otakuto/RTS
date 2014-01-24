@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "Mesh.h"
+#include "stdafx.hpp"
+#include "Mesh.hpp"
 
 Mesh::Mesh(const LPDIRECT3DDEVICE9 &device, const LPCWSTR &file)
 :

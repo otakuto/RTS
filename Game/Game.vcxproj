@@ -21,12 +21,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectGraphics.h" />
-    <ClInclude Include="DirectInput.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="DirectGraphics.hpp" />
+    <ClInclude Include="DirectInput.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Main.hpp" />
+    <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="stdafx.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E5744DA0-8FE2-42E2-846B-5E584C213CA1}</ProjectGuid>
@@ -72,6 +72,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

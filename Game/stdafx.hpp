@@ -9,11 +9,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <wchar.h>
-
 #include <vector>
 #include <list>
 #include <map>
@@ -61,11 +56,4 @@ inline void SAFE_DELETE_ARRAY(T &p)
 		delete[] p;
 		p = nullptr;
 	}
-}
-
-template<typename T>
-inline RECT RECT_INIT(const T &left, const T &top, const T &right, const T &bottom)
-{
-	RECT rect = {left, top, right, bottom};
-	return rect;
 }
