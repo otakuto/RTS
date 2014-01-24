@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectGraphics.cpp">
+      <Filter>DirectGraphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectInput.cpp">
+      <Filter>DirectInput</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectGraphics.h">
+      <Filter>DirectGraphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectInput.h">
+      <Filter>DirectInput</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{7214d7fd-7857-414f-a158-51e3054fad1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stdafx">
+      <UniqueIdentifier>{da5c2902-9b8c-4844-96db-6c84096b6c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{aa5eeae6-7941-4b9e-9395-6dd8bb022740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectGraphics">
+      <UniqueIdentifier>{cd6caec0-8721-4083-aeb1-ac35f55b0f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{f24d4ee2-630e-4af3-9264-c0e32576eb0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectInput">
+      <UniqueIdentifier>{129ab3fb-68a1-4aaf-bf49-3eb4b8f9db12}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
