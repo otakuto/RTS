@@ -11,7 +11,7 @@ public:
 	DWORD materialLength;
 
 public:
-	Mesh(const LPDIRECT3DDEVICE9 &device, const LPCWSTR &file);
+	Mesh(LPDIRECT3DDEVICE9 const &device, LPCWSTR const &file);
 	~Mesh();
 
 public:

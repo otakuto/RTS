@@ -4,7 +4,7 @@
 class DirectInput
 {
 public:
-	DirectInput(const HWND &hWnd);
+	DirectInput(HWND const &hWnd);
 	~DirectInput();
 
 public:

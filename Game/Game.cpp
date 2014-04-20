@@ -9,11 +9,14 @@ Mesh *a;
 
 DirectInput *directInput;
 
-Game::Game(const HWND &hWnd)
+int const Game::WINDOW_WIDTH = 800;
+int const Game::WINDOW_HEIGHT = 800;
+
+Game::Game(HWND const &hWnd)
 :
 directGraphics(hWnd)
 {
-	const LPDIRECT3DDEVICE9 &device = directGraphics.Device();
+	LPDIRECT3DDEVICE9 const &device = directGraphics.Device();
 
 	directInput = new DirectInput(hWnd);
 
@@ -30,7 +33,7 @@ void Game::Run()
 {
 	directInput->Run();
 
-	const LPDIRECT3DDEVICE9 &device = directGraphics.Device();
+	LPDIRECT3DDEVICE9 const &device = directGraphics.Device();
 	{
 		static D3DXVECTOR3 eye = D3DXVECTOR3(0, 1, 1);
 		if (directInput->Key()[DIK_D])
@@ -74,19 +77,20 @@ void Game::Run()
 
 	device->Clear(0, nullptr, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_XRGB(0x00, 0x00, 0x00), 1, 0);
 	device->BeginScene();
-	/*
+
 	{
-	static float j = 0;
-	j += std::_Pi / 12 * 0.1;
-	for (int i = 0; i < 10; ++i)
-	{
-	device->SetTransform(D3DTS_WORLD, D3DXMatrixMultiply(&D3DXMATRIX(), D3DXMatrixTranslation(&D3DXMATRIX(), 0, i * 2, 0), D3DXMatrixRotationY(&D3DXMATRIX(), (std::_Pi / 12) * i + j)));
-	a->Draw();
+		static float j = 0;
+		j += std::_Pi / 12 * 0.1;
+		for (int i = 0; i < 10; ++i)
+		{
+			device->SetTransform(D3DTS_WORLD, D3DXMatrixMultiply(&D3DXMATRIX(), D3DXMatrixTranslation(&D3DXMATRIX(), 0, i * 2, 0), D3DXMatrixRotationY(&D3DXMATRIX(), (std::_Pi / 12) * i + j)));
+			a->Draw();
+		}
 	}
-	}
-	*/
+
+	if (false)
 	{
-		static unsigned char stage[10][10] = {0};
+		static unsigned char stage[10][10] = {};
 
 		for (int i = 0; i < 10; ++i)
 		{

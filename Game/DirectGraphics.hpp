@@ -4,14 +4,14 @@
 class DirectGraphics
 {
 public:
-	DirectGraphics(const HWND &hWnd);
+	DirectGraphics(HWND const &hWnd);
 	~DirectGraphics();
 
 public:
-	const LPDIRECT3DDEVICE9 &Device() const;
+	LPDIRECT3DDEVICE9 const &Device() const;
 
 public:
-	void createDirect3DDeviceObject(const HWND &hWnd);
+	void createDirect3DDeviceObject(HWND const &hWnd);
 	void setRenderingConfiguration();
 	void setFogConfiguration();
 

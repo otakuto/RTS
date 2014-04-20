@@ -5,7 +5,11 @@
 class Game
 {
 public:
-	Game(const HWND &hWnd);
+	static int const WINDOW_WIDTH;
+	static int const WINDOW_HEIGHT;
+
+public:
+	Game(HWND const &hWnd);
 	~Game();
 
 public:
@@ -14,6 +18,6 @@ public:
 protected:
 	DirectGraphics directGraphics;
 
-	LPD3DXMESH pMesh = nullptr;
+	LPD3DXMESH pMesh;
 };
 

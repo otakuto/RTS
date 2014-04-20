@@ -2,11 +2,11 @@
 #include "stdafx.hpp"
 #include "DirectInput.hpp"
 
-const int DirectInput::KEY_LENGTH = 256;
+int const DirectInput::KEY_LENGTH = 256;
 
-DirectInput::DirectInput(const HWND &hWnd)
+DirectInput::DirectInput(HWND const &hWnd)
 :
-key(std::vector<unsigned char const>(KEY_LENGTH))
+key(KEY_LENGTH)
 {
 	DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, reinterpret_cast<void**>(&directInput), nullptr);
 
@@ -46,7 +46,6 @@ DIMOUSESTATE2 const &DirectInput::MouseState() const
 {
 	return mouseState;
 }
-
 
 void DirectInput::Run()
 {

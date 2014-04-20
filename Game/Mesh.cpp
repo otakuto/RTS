@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 #include "Mesh.hpp"
 
-Mesh::Mesh(const LPDIRECT3DDEVICE9 &device, const LPCWSTR &file)
+Mesh::Mesh(LPDIRECT3DDEVICE9 const &device, LPCWSTR const &file)
 :
 device(device),
 mesh(nullptr),
@@ -37,7 +37,7 @@ materialLength(0)
 	material = new D3DMATERIAL9[materialLength];
 	texture = new LPDIRECT3DTEXTURE9[materialLength];
 
-	D3DXMATERIAL* d3dxmatrs = static_cast<D3DXMATERIAL*>(buffer->GetBufferPointer());
+	D3DXMATERIAL* d3dxmatrs = reinterpret_cast<D3DXMATERIAL*>(buffer->GetBufferPointer());
 
 	for (unsigned int i = 0; i < materialLength; ++i)
 	{
@@ -50,14 +50,12 @@ materialLength(0)
 		if (d3dxmatrs[i].pTextureFilename != nullptr)
 		{
 			//テクスチャ名をwcharに変換
-			wchar_t filename[1024];
+			wchar_t filename[1024] = {};
 			size_t num;
-			ZeroMemory(filename, sizeof(filename));
 			mbstowcs_s(&num, filename, 1024, d3dxmatrs[i].pTextureFilename, _TRUNCATE);
 			
 			//テクスチャファイルパスを作成する
-			wchar_t texturefile[1024];
-			ZeroMemory(texturefile, sizeof(texturefile));
+			wchar_t texturefile[1024] = {};
 			swprintf(texturefile, 1024, TEXT("%s%s"), dir, filename);
 
 			if (S_OK != D3DXCreateTextureFromFile(device, texturefile, &texture[i]))
@@ -72,7 +70,7 @@ materialLength(0)
 
 Mesh::~Mesh()
 {
-	free(material);
+	delete[] material;
 	material = nullptr;
 
 	for (unsigned int i = 0; i < materialLength; ++i)
@@ -82,7 +80,7 @@ Mesh::~Mesh()
 			texture[i]->Release();
 		}
 	}
-	free(texture);
+	delete[] texture;
 	texture = nullptr;
 }
 

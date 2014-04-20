@@ -8,8 +8,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	MyRegisterClass(hInstance);
-	//RECT rect = {0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT};
-	RECT rect = {0, 0, 800, 800};
+	RECT rect = {0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT};
+	
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
 	HWND hWnd = CreateWindow(
@@ -27,15 +27,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	if (!hWnd)
 	{
-		return false;
+		return 1;
 	}
 
 	ShowWindow(hWnd, nShowCmd);
 	UpdateWindow(hWnd);
 
 	Game game(hWnd);
-	MSG msg;
-	ZeroMemory(&msg, sizeof(msg));
+	MSG msg = {};
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -53,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 }
 
 
-ATOM MyRegisterClass(const HINSTANCE &hInstance)
+ATOM MyRegisterClass(HINSTANCE const &hInstance)
 {
 	WNDCLASSEX wcex;
 	wcex.cbSize = sizeof(wcex);

@@ -1,31 +1,30 @@
 #pragma once
 #include "stdafx.hpp"
 #include "DirectGraphics.hpp"
+#include "Game.hpp"
 
-DirectGraphics::DirectGraphics(const HWND &hWnd)
+DirectGraphics::DirectGraphics(HWND const &hWnd)
 :
 fogStart(150),
 fogEnd(1000)
 {
 	direct3D = Direct3DCreate9(D3D_SDK_VERSION);
-	if (direct3D == nullptr)
+	if (!direct3D)
 	{
 		throw;
 	}
 
 	//D3DPRESENT_PARAMETERS構造体初期化のためディスプレイモードを取得する
-	D3DDISPLAYMODE dmode;
-	ZeroMemory(&dmode, sizeof(dmode));
+	D3DDISPLAYMODE dmode = {};
 	direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &dmode);
 
 	//デバイスの状態を指定する
-	D3DPRESENT_PARAMETERS	d3dpp;
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	D3DPRESENT_PARAMETERS d3dpp = {};
 	{
 		//ウィンドウモード
 		d3dpp.Windowed = true;
-		d3dpp.BackBufferWidth = 800;
-		d3dpp.BackBufferHeight = 800;
+		d3dpp.BackBufferWidth = Game::WINDOW_WIDTH;
+		d3dpp.BackBufferHeight = Game::WINDOW_HEIGHT;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 		d3dpp.BackBufferFormat = dmode.Format;
 		d3dpp.BackBufferCount = 1;
@@ -37,9 +36,9 @@ fogEnd(1000)
 
 	//ディスプレイアダプタを表すためのデバイスを作成する
 	//描画処理方法と頂点処理方法はハードウェア処理が未対応であると失敗するので、処理方法の組み合わせを変えて再度作成を試みる
-	HRESULT		hr;
-	D3DDEVTYPE	devtype;
-	DWORD		behaviorFlags;
+	HRESULT hr;
+	D3DDEVTYPE devtype;
+	DWORD behaviorFlags;
 	for (int c = 0; c < 4; ++c)
 	{
 		switch (c)
@@ -111,15 +110,14 @@ fogEnd(1000)
 	D3DXMatrixPerspectiveFovLH(
 		&projection,
 		static_cast<float>(D3DXToRadian(90)),
-		static_cast<float>(800 / 800),	//アスペクト比
+		static_cast<float>(Game::WINDOW_WIDTH / Game::WINDOW_HEIGHT),	//アスペクト比
 		1,               //クリッピング距離（近いほう）
 		100.0f);        //クリッピング距離（遠いほう)
 	device->SetTransform(D3DTS_PROJECTION, &projection);
 
 	//ライトの設定
 	device->SetRenderState(D3DRS_LIGHTING, true);
-	D3DLIGHT9 light;
-	ZeroMemory(&light, sizeof(light));
+	D3DLIGHT9 light = {};
 	light.Type = D3DLIGHT_DIRECTIONAL;
 
 	light.Diffuse.r = 0.0f;
@@ -142,14 +140,15 @@ fogEnd(1000)
 	device->LightEnable(0, true);
 	return;
 
+	//ウィンドウハンドル確認
 	if (!hWnd)
 	{
-		//ウィンドウハンドル確認
 		throw TEXT("Direct3Dの作成に失敗しました\nウィンドウハンドルがありません");
 	}
+
+	//Direct3Dオブジェクトの作成
 	if (!(direct3D = Direct3DCreate9(D3D_SDK_VERSION)))
 	{
-		//Direct3Dオブジェクトの作成
 		throw TEXT("Direct3Dの作成に失敗しました");
 	}
 
@@ -171,10 +170,9 @@ DirectGraphics::~DirectGraphics()
 	SAFE_RELEASE(device);
 }
 
-void DirectGraphics::createDirect3DDeviceObject(const HWND &hWnd)
+void DirectGraphics::createDirect3DDeviceObject(HWND const &hWnd)
 {
-	D3DPRESENT_PARAMETERS parameters;
-	ZeroMemory(&parameters, sizeof(parameters));
+	D3DPRESENT_PARAMETERS parameters = {};
 	parameters.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 	parameters.BackBufferFormat = D3DFMT_UNKNOWN;
 	parameters.BackBufferCount = 1;
@@ -217,10 +215,9 @@ void DirectGraphics::setRenderingConfiguration()
 
 void DirectGraphics::setFogConfiguration()
 {
-	D3DCAPS9 caps;
-	ZeroMemory(&caps, sizeof(caps));
+	D3DCAPS9 caps = {};
 	device->GetDeviceCaps(&caps);
-	if ((caps.RasterCaps & D3DPRASTERCAPS_FOGTABLE) == 0)
+	if (!(caps.RasterCaps & D3DPRASTERCAPS_FOGTABLE))
 	{
 		if (MessageBox(0, TEXT("ピクセルフォグが使えない可能性があります。続行しますか?"), TEXT("質問"), MB_ABORTRETRYIGNORE) == IDABORT)
 		{
@@ -235,7 +232,7 @@ void DirectGraphics::setFogConfiguration()
 	device->SetRenderState(D3DRS_FOGEND, static_cast<DWORD>(fogEnd));
 }
 
-const LPDIRECT3DDEVICE9 &DirectGraphics::Device() const
+LPDIRECT3DDEVICE9 const &DirectGraphics::Device() const
 {
 	return device;
 }
