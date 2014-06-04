@@ -11,13 +11,10 @@
 
 #include <vector>
 #include <list>
-#include <map>
 #include <memory>
 #include <functional>
 #include <array>
 #include <random>
-
-#include <boost/coroutine/coroutine.hpp>
 
 #include <d3dx9.h>
 #include <dinput.h>

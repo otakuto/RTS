@@ -4,70 +4,76 @@
 #include "DirectGraphics.hpp"
 #include "DirectInput.hpp"
 #include "Mesh.hpp"
-
-Mesh *a;
-
-DirectInput *directInput;
+#include "Process.hpp"
 
 int const Game::WINDOW_WIDTH = 800;
 int const Game::WINDOW_HEIGHT = 800;
 
-Game::Game(HWND const &hWnd)
-:
-directGraphics(hWnd)
+Game::Game(HWND const & hWnd)
+	:
+	directGraphics(hWnd),
+	directInput(hWnd)
 {
-	LPDIRECT3DDEVICE9 const &device = directGraphics.Device();
-
-	directInput = new DirectInput(hWnd);
-
-	a = new Mesh(device, TEXT("object.x"));
 }
 
 Game::~Game()
 {
-	delete directInput;
-	delete a;
 }
 
 void Game::Run()
 {
-	directInput->Run();
+	directInput.Run();
 
-	LPDIRECT3DDEVICE9 const &device = directGraphics.Device();
+	LPDIRECT3DDEVICE9 const & device = directGraphics.Device();
+	static Mesh a = Mesh(device, TEXT("object.x"));
+	static Process p = Process(device);
+
 	{
+		static float theta = 0;
+		static float iota = 0;
+		theta -= directInput.MouseState().lX * 0.01;
+		iota += directInput.MouseState().lY * 0.01;
+		if (iota > (std::_Pi / 2))
+		{
+
+		}
+
+		float A = 0.1;
 		static D3DXVECTOR3 eye = D3DXVECTOR3(0, 1, 1);
-		if (directInput->Key()[DIK_D])
+		if (directInput.Key()[DIK_D])
 		{
-			eye.x += static_cast<float>(0.1);
+			eye.x += std::cos(theta - (std::_Pi / 2)) * A;
+			eye.z += std::sin(theta - (std::_Pi / 2)) * A;
 		}
-		if (directInput->Key()[DIK_A])
+		if (directInput.Key()[DIK_A])
 		{
-			eye.x -= static_cast<float>(0.1);
+			eye.x += std::cos(theta + (std::_Pi / 2)) * A;
+			eye.z += std::sin(theta + (std::_Pi / 2)) * A;
 		}
-		if (directInput->Key()[DIK_SPACE])
+		if (directInput.Key()[DIK_SPACE])
 		{
-			eye.y += static_cast<float>(0.1);
+			eye.y += A;
 		}
-		if (directInput->Key()[DIK_LSHIFT])
+		if (directInput.Key()[DIK_LSHIFT])
 		{
-			eye.y -= static_cast<float>(0.1);
+			eye.y -= A;
 		}
-		if (directInput->Key()[DIK_W])
+		if (directInput.Key()[DIK_W])
 		{
-			eye.z += static_cast<float>(0.1);
+			eye.x += std::cos(theta) * A;
+			eye.z += std::sin(theta) * A;
 		}
-		if (directInput->Key()[DIK_S])
+		if (directInput.Key()[DIK_S])
 		{
-			eye.z -= static_cast<float>(0.1);
+			eye.x -= std::cos(theta) * A;
+			eye.z -= std::sin(theta) * A;
 		}
 
 		static D3DXVECTOR3 at = D3DXVECTOR3(0, 0, 0);
-		at.x = eye.x + 1;
+		at.x = eye.x + std::cos(theta);
 		at.y = eye.y - 1;
-		at.z = eye.z + 1;
-		directInput->MouseState().lX * 0.1;
-		directInput->MouseState().lY * 0.1;
-
+		at.z = eye.z + std::sin(theta);
+		
 		static D3DXVECTOR3 up = D3DXVECTOR3(0, 1, 0);
 
 		D3DXMATRIX matrix;
@@ -84,11 +90,13 @@ void Game::Run()
 		for (int i = 0; i < 10; ++i)
 		{
 			device->SetTransform(D3DTS_WORLD, D3DXMatrixMultiply(&D3DXMATRIX(), D3DXMatrixTranslation(&D3DXMATRIX(), 0, i * 2, 0), D3DXMatrixRotationY(&D3DXMATRIX(), (std::_Pi / 12) * i + j)));
-			a->Draw();
+			a.Draw();
 		}
 	}
+	p.Run();
+	p.Draw();
 
-	if (false)
+	if (true)
 	{
 		static unsigned char stage[10][10] = {};
 
@@ -100,7 +108,7 @@ void Game::Run()
 				{
 				case 0:
 					device->SetTransform(D3DTS_WORLD, D3DXMatrixTranslation(&D3DXMATRIX(), i, 0, j));
-					a->Draw();
+					a.Draw();
 					break;
 				}
 			}

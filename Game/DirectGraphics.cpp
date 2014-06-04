@@ -39,9 +39,9 @@ fogEnd(1000)
 	HRESULT hr;
 	D3DDEVTYPE devtype;
 	DWORD behaviorFlags;
-	for (int c = 0; c < 4; ++c)
+	for (int i = 0; i < 4; ++i)
 	{
-		switch (c)
+		switch (i)
 		{
 		case 0:
 			//ハードウェアで描画処理を行う
@@ -76,7 +76,6 @@ fogEnd(1000)
 			behaviorFlags,
 			&d3dpp,
 			&device);
-
 
 		if (FAILED(hr))
 		{

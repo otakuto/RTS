@@ -4,12 +4,12 @@
 class DirectInput
 {
 public:
-	DirectInput(HWND const &hWnd);
+	DirectInput(HWND const & hWnd);
 	~DirectInput();
 
 public:
-	std::vector<unsigned char const> const &Key() const;
-	DIMOUSESTATE2 const &MouseState() const;
+	std::vector<unsigned char const> const & Key() const;
+	DIMOUSESTATE2 const & MouseState() const;
 public:
 	void Run();
 

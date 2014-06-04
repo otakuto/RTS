@@ -4,7 +4,7 @@
 
 int const DirectInput::KEY_LENGTH = 256;
 
-DirectInput::DirectInput(HWND const &hWnd)
+DirectInput::DirectInput(HWND const & hWnd)
 :
 key(KEY_LENGTH)
 {
@@ -37,12 +37,12 @@ DirectInput::~DirectInput()
 	SAFE_RELEASE(keyboardDevice);
 }
 
-std::vector<unsigned char const> const &DirectInput::Key() const
+std::vector<unsigned char const> const & DirectInput::Key() const
 {
 	return key;
 }
 
-DIMOUSESTATE2 const &DirectInput::MouseState() const
+DIMOUSESTATE2 const & DirectInput::MouseState() const
 {
 	return mouseState;
 }
