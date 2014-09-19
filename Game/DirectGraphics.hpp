@@ -15,7 +15,7 @@ public:
 	void setRenderingConfiguration();
 	void setFogConfiguration();
 
-protected:
+private:
 	LPDIRECT3D9	direct3D;
 	LPDIRECT3DDEVICE9 device;
 	float fogStart;

@@ -3,15 +3,13 @@
 
 class Mesh
 {
-public:
-	LPDIRECT3DDEVICE9 const & device;
+private:
+	IDirect3DDevice9 * const device;
 	LPD3DXMESH mesh;
-	LPDIRECT3DTEXTURE9 * texture;
-	D3DMATERIAL9 * material;
-	DWORD materialLength;
-
+	std::vector<std::pair<D3DMATERIAL9, LPDIRECT3DTEXTURE9>> material;
+	
 public:
-	Mesh(LPDIRECT3DDEVICE9 const & device, LPCWSTR const & file);
+	Mesh(IDirect3DDevice9 * const device, std::wstring const & file);
 	~Mesh();
 
 public:

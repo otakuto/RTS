@@ -5,7 +5,7 @@
 Process::Process(LPDIRECT3DDEVICE9 const & device)
 	:
 	device(device),
-	mesh(device, TEXT("s.x")),
+	mesh(device, TEXT("sample.x")),
 	position(0, 0, 0)
 {
 }

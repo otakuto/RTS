@@ -5,8 +5,8 @@
 int const DirectInput::KEY_LENGTH = 256;
 
 DirectInput::DirectInput(HWND const & hWnd)
-:
-key(KEY_LENGTH)
+	:
+	key(KEY_LENGTH)
 {
 	DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, reinterpret_cast<void**>(&directInput), nullptr);
 
@@ -32,9 +32,11 @@ key(KEY_LENGTH)
 
 DirectInput::~DirectInput()
 {
-	SAFE_RELEASE(directInput);
+	release(directInput);
 	keyboardDevice->Unacquire();
-	SAFE_RELEASE(keyboardDevice);
+	release(keyboardDevice);
+	mouseDevice->Unacquire();
+	release(mouseDevice);
 }
 
 std::vector<unsigned char const> const & DirectInput::Key() const
@@ -49,7 +51,7 @@ DIMOUSESTATE2 const & DirectInput::MouseState() const
 
 void DirectInput::Run()
 {
-	if (FAILED(keyboardDevice->GetDeviceState((sizeof(unsigned char const)* KEY_LENGTH), key.data())))
+	if (FAILED(keyboardDevice->GetDeviceState((sizeof(unsigned char const) * KEY_LENGTH), key.data())))
 	{
 		keyboardDevice->Acquire();
 	}

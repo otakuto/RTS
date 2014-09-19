@@ -1,52 +1,47 @@
 #include "stdafx.hpp"
 #include "Mesh.hpp"
 
-Mesh::Mesh(LPDIRECT3DDEVICE9 const & device, LPCWSTR const & file)
+Mesh::Mesh(IDirect3DDevice9 * const device, std::wstring const & file)
 	:
 	device(device),
 	mesh(nullptr),
-	texture(nullptr),
-	material(nullptr),
-	materialLength(0)
+	material()
 {
-
 	//Xファイルのディレクトリを取得(テクスチャのロードに使う)
 	wchar_t dir[_MAX_DIR];
-	_wsplitpath_s(file, nullptr, 0, dir, _MAX_DIR, nullptr, 0, nullptr, 0);
+	_wsplitpath_s(file.c_str(), nullptr, 0, dir, _MAX_DIR, nullptr, 0, nullptr, 0);
 
 	//Xファイルロード
-	LPD3DXBUFFER buffer;
-	if (D3D_OK != D3DXLoadMeshFromX(file, D3DXMESH_SYSTEMMEM, device, nullptr, &buffer, nullptr, &materialLength, &mesh))
+	ID3DXBuffer * buffer = nullptr;
 	{
-		throw;
+		DWORD materialLength = 0;
+		if (FAILED(D3DXLoadMeshFromX(file.c_str(), D3DXMESH_SYSTEMMEM, device, nullptr, &buffer, nullptr, &materialLength, &mesh)))
+		{
+			throw;
+		}
+		material.resize(materialLength);
 	}
-
-	//Xファイルに法線がない場合は、法線を書き込む
+	
+	//法線ベクトルがない場合は法線ベクトルを書き込む
 	if (!(mesh->GetFVF() & D3DFVF_NORMAL))
 	{
-		ID3DXMesh * pTempMesh = nullptr;
+		ID3DXMesh * tmp = nullptr;
 
-		mesh->CloneMeshFVF(mesh->GetOptions(), (mesh->GetFVF() | D3DFVF_NORMAL), device, &pTempMesh);
+		mesh->CloneMeshFVF(mesh->GetOptions(), (mesh->GetFVF() | D3DFVF_NORMAL), device, &tmp);
 
-		D3DXComputeNormals(pTempMesh, nullptr);
+		D3DXComputeNormals(tmp, nullptr);
 		mesh->Release();
-		mesh = pTempMesh;
+		mesh = tmp;
 	}
 
 	//マテリアル、テクスチャの準備
-	material = new D3DMATERIAL9[materialLength];
-	texture = new LPDIRECT3DTEXTURE9[materialLength];
-
 	D3DXMATERIAL * d3dxmatrs = reinterpret_cast<D3DXMATERIAL *>(buffer->GetBufferPointer());
-
-	for (unsigned int i = 0; i < materialLength; ++i)
+	for (unsigned int i = 0; i < material.size(); ++i)
 	{
-		//マテリアル複写
-		material[i] = d3dxmatrs[i].MatD3D;
-		material[i].Ambient = material[i].Diffuse;
+		material[i].first = d3dxmatrs[i].MatD3D;
+		material[i].first.Ambient = material[i].first.Diffuse;
 
 		//テクスチャをロード
-		texture[i] = nullptr;
 		if (d3dxmatrs[i].pTextureFilename != nullptr)
 		{
 			//テクスチャ名をwcharに変換
@@ -55,43 +50,30 @@ Mesh::Mesh(LPDIRECT3DDEVICE9 const & device, LPCWSTR const & file)
 			mbstowcs_s(&num, filename, 1024, d3dxmatrs[i].pTextureFilename, _TRUNCATE);
 
 			//テクスチャファイルパスを作成する
-			wchar_t texturefile[1024] = {};
-			swprintf(texturefile, 1024, TEXT("%s%s"), dir, filename);
-
-			if (S_OK != D3DXCreateTextureFromFile(device, texturefile, &texture[i]))
+			std::wstring texturefile = dir;
+			texturefile += filename;
+			if (FAILED(D3DXCreateTextureFromFile(device, texturefile.c_str(), &material[i].second)))
 			{
-				texture[i] = nullptr;
+				material[i].second = nullptr;
 			}
 		}
 	}
-
 	buffer->Release();
 }
 
 Mesh::~Mesh()
 {
-	delete[] material;
-	material = nullptr;
-
-	for (unsigned int i = 0; i < materialLength; ++i)
-	{
-		if (texture[i])
-		{
-			texture[i]->Release();
-		}
-	}
-	delete[] texture;
-	texture = nullptr;
+	mesh->Release();
 }
 
 void Mesh::Draw() const
 {
 	device->SetVertexShader(nullptr);
 	device->SetFVF(mesh->GetFVF());
-	for (unsigned int i = 0; i < materialLength; ++i)
+	for (unsigned int i = 0; i < material.size(); ++i)
 	{
-		device->SetMaterial(&material[i]);
-		device->SetTexture(0, texture[i]);
+		device->SetMaterial(&material[i].first);
+		device->SetTexture(0, material[i].second);
 		mesh->DrawSubset(i);
 	}
 }

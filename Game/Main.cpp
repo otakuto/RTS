@@ -7,7 +7,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	MyRegisterClass(hInstance);
+	{
+		WNDCLASSEX wcex = {};
+		wcex.cbSize = sizeof(wcex);
+		wcex.style = CS_HREDRAW | CS_VREDRAW;
+		wcex.lpfnWndProc = WndProc;
+		wcex.cbClsExtra = 0;
+		wcex.cbWndExtra = 0;
+		wcex.hInstance = hInstance;
+		wcex.hIcon = nullptr;
+		wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+		wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+		wcex.lpszMenuName = nullptr;
+		wcex.lpszClassName = TEXT("Game");
+		wcex.hIconSm = nullptr;
+		RegisterClassEx(&wcex);
+	}
+
 	RECT rect = {0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT};
 	
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
@@ -49,26 +65,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 
 	return 0;
-}
-
-
-ATOM MyRegisterClass(HINSTANCE const & hInstance)
-{
-	WNDCLASSEX wcex;
-	wcex.cbSize = sizeof(wcex);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = nullptr;
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = nullptr;
-	wcex.lpszClassName = TEXT("Game");
-	wcex.hIconSm = nullptr;
-
-	return RegisterClassEx(&wcex);
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

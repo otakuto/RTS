@@ -15,6 +15,8 @@
 #include <functional>
 #include <array>
 #include <random>
+#include <string>
+#include <utility>
 
 #include <d3dx9.h>
 #include <dinput.h>
@@ -26,31 +28,11 @@
 #pragma comment(lib, "dxguid.lib")
 
 template<typename T>
-inline void SAFE_RELEASE(T &p)
+inline void release(T & t)
 {
-	if (p)
+	if (t)
 	{
-		p->Release();
-		p = nullptr;
-	}
-}
-
-template<typename T>
-inline void SAFE_DELETE(T &p)
-{
-	if (p)
-	{
-		delete p;
-		p = nullptr;
-	}
-}
-
-template<typename T>
-inline void SAFE_DELETE_ARRAY(T &p)
-{
-	if (p)
-	{
-		delete[] p;
-		p = nullptr;
+		t->Release();
+		t = nullptr;
 	}
 }
