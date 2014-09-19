@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "stdafx.hpp"
 #include "Game.hpp"
 #include "DirectGraphics.hpp"
@@ -65,7 +65,7 @@ void Game::Run()
 
 
 
-	if (fr % 10 == 0)
+	//if (fr % 10 == 0)
 	{
 		view = buffer;
 		++buffer;
@@ -123,17 +123,17 @@ void Game::Run()
 		static float iota = 0;
 		theta -= directInput.MouseState().lX * 0.01;
 		iota -= directInput.MouseState().lY * 0.01;
-		if (iota >= (std::_Pi / 2))
+		if (iota > (std::_Pi / 2))
 		{
 			iota = std::_Pi / 2;
 		}
-		if (iota <= -(std::_Pi / 2))
+		if (iota < -(std::_Pi / 2))
 		{
 			iota = -std::_Pi / 2;
 		}
 
-		float A = 0.2;
-		static D3DXVECTOR3 eye = D3DXVECTOR3(0, 1, 1);
+		static float A = 0.4;
+		static D3DXVECTOR3 eye = D3DXVECTOR3(0, 0, 0);
 		auto key = directInput.Key();
 		if (key[DIK_D])
 		{
@@ -184,12 +184,14 @@ void Game::Run()
 		}
 
 		static D3DXVECTOR3 at = D3DXVECTOR3(0, 0, 0);
-		at.x = eye.x + std::cos(theta);
+		at.x = eye.x + std::cos(theta) * std::cos(iota);
 		at.y = eye.y + std::sin(iota);
-		at.z = eye.z + std::sin(theta);
-
-		static D3DXVECTOR3 up = D3DXVECTOR3(0, 1, 0);
-
+		at.z = eye.z + std::sin(theta) * std::cos(iota);
+		
+		static D3DXVECTOR3 up = D3DXVECTOR3(0, 0, 0);
+		up.x = -std::cos(theta) * std::sin(iota);
+		up.y = std::cos(iota);
+		up.z = -std::sin(theta) * std::sin(iota);
 		device->SetTransform(D3DTS_VIEW, D3DXMatrixLookAtLH(&D3DXMATRIX(), &eye, &at, &up));
 	}
 

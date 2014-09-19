@@ -1,4 +1,4 @@
-#include "stdafx.hpp"
+ï»¿#include "stdafx.hpp"
 #include "Mesh.hpp"
 
 Mesh::Mesh(IDirect3DDevice9 * const device, std::wstring const & file)
@@ -7,11 +7,11 @@ Mesh::Mesh(IDirect3DDevice9 * const device, std::wstring const & file)
 	mesh(nullptr),
 	material()
 {
-	//Xƒtƒ@ƒCƒ‹‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğæ“¾(ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh‚Ég‚¤)
+	//Xãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å–å¾—(ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰ã«ä½¿ã†)
 	wchar_t dir[_MAX_DIR];
 	_wsplitpath_s(file.c_str(), nullptr, 0, dir, _MAX_DIR, nullptr, 0, nullptr, 0);
 
-	//Xƒtƒ@ƒCƒ‹ƒ[ƒh
+	//Xãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ‰
 	ID3DXBuffer * buffer = nullptr;
 	{
 		DWORD materialLength = 0;
@@ -22,7 +22,7 @@ Mesh::Mesh(IDirect3DDevice9 * const device, std::wstring const & file)
 		material.resize(materialLength);
 	}
 	
-	//–@üƒxƒNƒgƒ‹‚ª‚È‚¢ê‡‚Í–@üƒxƒNƒgƒ‹‚ğ‘‚«‚Ş
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ãŒãªã„å ´åˆã¯æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’æ›¸ãè¾¼ã‚€
 	if (!(mesh->GetFVF() & D3DFVF_NORMAL))
 	{
 		ID3DXMesh * tmp = nullptr;
@@ -34,22 +34,22 @@ Mesh::Mesh(IDirect3DDevice9 * const device, std::wstring const & file)
 		mesh = tmp;
 	}
 
-	//ƒ}ƒeƒŠƒAƒ‹AƒeƒNƒXƒ`ƒƒ‚Ì€”õ
+	//ãƒãƒ†ãƒªã‚¢ãƒ«ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æº–å‚™
 	D3DXMATERIAL * d3dxmatrs = reinterpret_cast<D3DXMATERIAL *>(buffer->GetBufferPointer());
 	for (unsigned int i = 0; i < material.size(); ++i)
 	{
 		material[i].first = d3dxmatrs[i].MatD3D;
 		material[i].first.Ambient = material[i].first.Diffuse;
 
-		//ƒeƒNƒXƒ`ƒƒ‚ğƒ[ƒh
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãƒ­ãƒ¼ãƒ‰
 		if (d3dxmatrs[i].pTextureFilename != nullptr)
 		{
-			//ƒeƒNƒXƒ`ƒƒ–¼‚ğwchar‚É•ÏŠ·
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åã‚’wcharã«å¤‰æ›
 			wchar_t filename[1024] = {};
 			size_t num;
 			mbstowcs_s(&num, filename, 1024, d3dxmatrs[i].pTextureFilename, _TRUNCATE);
 
-			//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹ƒpƒX‚ğì¬‚·‚é
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’ä½œæˆã™ã‚‹
 			std::wstring texturefile = dir;
 			texturefile += filename;
 			if (FAILED(D3DXCreateTextureFromFile(device, texturefile.c_str(), &material[i].second)))

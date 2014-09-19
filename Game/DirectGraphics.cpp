@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "stdafx.hpp"
 #include "DirectGraphics.hpp"
 #include "Game.hpp"
@@ -15,17 +15,17 @@ DirectGraphics::DirectGraphics(HWND const & hWnd)
 		throw;
 	}
 
-	//ÉfÉBÉXÉvÉåÉCÉAÉ_ÉvÉ^
+	//„Éá„Ç£„Çπ„Éó„É¨„Ç§„Ç¢„ÉÄ„Éó„Çø
 	[&]()
 	{
-		//D3DPRESENT_PARAMETERSç\ë¢ëÃèâä˙âªÇÃÇΩÇﬂÉfÉBÉXÉvÉåÉCÉÇÅ[ÉhÇéÊìæÇ∑ÇÈ
+		//D3DPRESENT_PARAMETERSÊßãÈÄ†‰ΩìÂàùÊúüÂåñ„ÅÆ„Åü„ÇÅ„Éá„Ç£„Çπ„Éó„É¨„Ç§„É¢„Éº„Éâ„ÇíÂèñÂæó„Åô„Çã
 		D3DDISPLAYMODE dmode = {};
 		direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &dmode);
 
-		//ÉfÉoÉCÉXÇÃèÛë‘ÇéwíËÇ∑ÇÈ
+		//„Éá„Éê„Ç§„Çπ„ÅÆÁä∂ÊÖã„ÇíÊåáÂÆö„Åô„Çã
 		D3DPRESENT_PARAMETERS parameters = {};
 		{
-			//ÉEÉBÉìÉhÉEÉÇÅ[Éh
+			//„Ç¶„Ç£„É≥„Éâ„Ç¶„É¢„Éº„Éâ
 			parameters.Windowed = true;
 			parameters.BackBufferWidth = Game::WINDOW_WIDTH;
 			parameters.BackBufferHeight = Game::WINDOW_HEIGHT;
@@ -33,7 +33,7 @@ DirectGraphics::DirectGraphics(HWND const & hWnd)
 			parameters.BackBufferFormat = dmode.Format;
 			parameters.BackBufferCount = 1;
 
-			//ZÉoÉbÉtÉ@ÇÃê›íË
+			//Z„Éê„ÉÉ„Éï„Ç°„ÅÆË®≠ÂÆö
 			parameters.EnableAutoDepthStencil = true;
 			parameters.AutoDepthStencilFormat = D3DFMT_D16;
 		}
@@ -55,14 +55,14 @@ DirectGraphics::DirectGraphics(HWND const & hWnd)
 	device->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
 	device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
-	//ÉvÉçÉWÉFÉNÉVÉáÉì
+	//„Éó„É≠„Ç∏„Çß„ÇØ„Ç∑„Éß„É≥
 	{
 		D3DXMATRIX projection;
 		D3DXMatrixPerspectiveFovLH(&projection, D3DXToRadian(90), static_cast<float>(Game::WINDOW_WIDTH) / static_cast<float>(Game::WINDOW_HEIGHT), fogStart, fogEnd);
 		device->SetTransform(D3DTS_PROJECTION, &projection);
 	}
 
-	//ÉâÉCÉg
+	//„É©„Ç§„Éà
 	{
 		D3DLIGHT9 light = {};
 		light.Type = D3DLIGHT_DIRECTIONAL;

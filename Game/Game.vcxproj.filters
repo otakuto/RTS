@@ -19,9 +19,6 @@
     <ClCompile Include="Process.cpp">
       <Filter>Process</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectGraphics.hpp">
@@ -45,9 +42,6 @@
     <ClInclude Include="Process.hpp">
       <Filter>Process</Filter>
     </ClInclude>
-    <ClInclude Include="Material.hpp">
-      <Filter>Material</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Main">
@@ -70,9 +64,6 @@
     </Filter>
     <Filter Include="Process">
       <UniqueIdentifier>{cae346fe-b6dd-4b9c-93ed-8237ff712f6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Material">
-      <UniqueIdentifier>{78495c19-f51a-4537-980a-c5012c4499dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

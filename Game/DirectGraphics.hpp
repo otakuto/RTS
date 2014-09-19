@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "stdafx.hpp"
 
 class DirectGraphics
@@ -9,11 +9,6 @@ public:
 
 public:
 	LPDIRECT3DDEVICE9 const & Device() const;
-
-public:
-	void createDirect3DDeviceObject(HWND const & hWnd);
-	void setRenderingConfiguration();
-	void setFogConfiguration();
 
 private:
 	LPDIRECT3D9	direct3D;

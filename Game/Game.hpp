@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "stdafx.hpp"
 #include "DirectGraphics.hpp"
 #include "DirectInput.hpp"

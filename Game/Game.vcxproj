@@ -15,7 +15,6 @@
     <ClCompile Include="DirectInput.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Process.cpp" />
   </ItemGroup>
@@ -24,7 +23,6 @@
     <ClInclude Include="DirectInput.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Main.hpp" />
-    <ClInclude Include="Material.hpp" />
     <ClInclude Include="Mesh.hpp" />
     <ClInclude Include="Process.hpp" />
     <ClInclude Include="stdafx.hpp" />
@@ -60,8 +58,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;D:\Program Files\boost\include\boost-1_55;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;D:\Program Files\boost\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
